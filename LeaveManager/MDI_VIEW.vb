@@ -33,17 +33,6 @@ Public Class MDI_VIEW
             LBL_DATE.Text = .FromDate.Month & "/" & .FromDate.Year
             LBL_DATE.Text &= "->" & .ToDate.Month & "/" & .ToDate.Year
             .BackColor = Color.LightGray
-            ''Dim lst As New List(Of BarInformation)
-
-            'lst.Add(New BarInformation("Row 1", New Date(2015, 6, 12), New Date(2015, 6, 16), Color.Aqua, Color.Khaki, 0))
-            'lst.Add(New BarInformation("Row 2", New Date(2007, 12, 13), New Date(2007, 12, 20), Color.AliceBlue, Color.Khaki, 1))
-            'lst.Add(New BarInformation("Row 3", New Date(2007, 12, 14), New Date(2007, 12, 24), Color.Violet, Color.Khaki, 2))
-            'lst.Add(New BarInformation("Row 2", New Date(2007, 12, 21), New Date(2007, 12, 22, 12, 0, 0), Color.Yellow, Color.Khaki, 1))
-            'lst.Add(New BarInformation("Row 1", New Date(2007, 12, 17), New Date(2007, 12, 24), Color.LawnGreen, Color.Khaki, 0))
-
-            'For Each bar As BarInformation In lst
-            '    .AddChartBar(bar.RowText, bar, bar.FromTime, bar.ToTime, bar.Color, bar.HoverColor, bar.Index)
-            'Next
         End With
         update()
     End Sub
@@ -81,7 +70,8 @@ Public Class MDI_VIEW
             '2. on retrouve les congés
             upcmd = New OleDbCommand
             upcmd.Connection = connection
-            upcmd.CommandText = "SELECT startDate,toDate,typeIndex,total,index FROM [ListLeave] where userIndex=" & indexnom & ""
+            upcmd.CommandText = "SELECT startDate,toDate,typeIndex,total,index,PM,AM FROM [ListLeave] where userIndex=" & indexnom & ""
+            '                           0         1      2         3     4     5  6  
             Try
                 dr = upcmd.ExecuteReader()
                 b = False
@@ -90,9 +80,48 @@ Public Class MDI_VIEW
                     Dim df As Date = dr.Item(0)
                     Dim dt As Date = dr.Item(1)
 
+                    Dim fromh, toh As Integer
+                    fromh = 6
+                    toh = 21
+                   
+                    Dim colorday, colormid As Color
+                    colormid = Color.Red
+                  
 
 
-                    lst.Add(New BarInformation(i.Text, New Date(df.Year, df.Month, df.Day, 6, 0, 0), New Date(dt.Year, dt.Month, dt.Day, 21, 0, 0), Color.Aqua, Color.Khaki, j))
+
+                    Select Case dr.Item(2)
+
+                        Case 1 'RTT
+                            colorday = Color.Green
+                            Exit Select
+                        Case 2 'cp
+                            colorday = Color.Yellow
+                            Exit Select
+                        Case 3 'health
+                            colorday = Color.Blue
+                            Exit Select
+                        Case 4 'ss
+                            colorday = Color.Orange
+                            Exit Select
+                        Case 5 'famille
+                            colorday = Color.Aqua
+                            Exit Select
+                        Case Else
+                            colorday = Color.Red
+
+                    End Select
+                    If (dr.Item(5)) Then
+                        fromh = 12
+                        colormid = colorday
+                        colorday = Color.Red
+                    End If
+                    If (dr.Item(6)) Then
+                        toh = 12
+                        colormid = colorday
+                        colorday = Color.Red
+                    End If
+                    lst.Add(New BarInformation(i.Text, New Date(df.Year, df.Month, df.Day, fromh, 0, 0), New Date(dt.Year, dt.Month, dt.Day, toh, 0, 0), colorday, colormid, j))
 
                     Dim lvi As ListViewItem = LV_List.Items.Add(i.Text)
                     lvi.SubItems.Add(prenom)
@@ -159,24 +188,46 @@ Public Class MDI_VIEW
     End Sub
 
    
-    'Private Sub GanttChart1_MouseMove(sender As Object, e As MouseEventArgs) Handles GanttChart1.MouseMove
-    '    With GanttChart1
-    '        Dim toolTipText As New List(Of String)
+    Private Sub GanttChart1_MouseMove(sender As Object, e As MouseEventArgs) Handles GanttChart1.MouseMove
+        With GanttChart1
+            Dim toolTipText As New List(Of String)
 
-    '        If .MouseOverRowText.Length > 0 Then
-    '            Dim val As BarInformation = CType(.MouseOverRowValue, BarInformation)
-    '            toolTipText.Add("[b]Time:")
-    '            toolTipText.Add("From " & val.FromTime.ToString("HH:mm"))
-    '            toolTipText.Add("To " & val.ToTime.ToString("HH:mm"))
-    '        Else
-    '            toolTipText.Add("")
-    '        End If
+            If .MouseOverRowText.Length > 0 Then
+                Dim val As BarInformation = CType(.MouseOverRowValue, BarInformation)
+                Select Case val.Color
+                 
+                    Case Color.Green
+                        toolTipText.Add("[b]Type: RTT")
+                        Exit Select
+                    Case Color.Yellow
+                        toolTipText.Add("[b]Type:CP")
+                        Exit Select
+                    Case Color.Blue
+                        toolTipText.Add("[b]Type:Health")
+                        Exit Select
+                    Case Color.Orange
+                        toolTipText.Add("[b]Type:Sans Solde")
+                        Exit Select
+                    Case Color.Aqua
+                        toolTipText.Add("[b]Type:Famille")
+                        Exit Select
+                    Case Else
+                        toolTipText.Add("[b]Type:INCONNU ")
 
-    '        .ToolTipTextTitle = .MouseOverRowText
-    '        .ToolTipText = toolTipText
+                End Select
 
-    '    End With
-    'End Sub
+                toolTipText.Add("[b]Time:")
+                toolTipText.Add("From " & val.FromTime.ToString("dd/MM HH:mm"))
+                toolTipText.Add("To " & val.ToTime.ToString("dd/MM HH:mm"))
+            Else
+                toolTipText.Add("")
+            End If
+
+            .ToolTipTextTitle = .MouseOverRowText
+            .ToolTipText = toolTipText
+
+        End With
+    End Sub
 
     Private Sub DT_FROM_ValueChanged(sender As Object, e As EventArgs) Handles DT_FROM.ValueChanged, NUD_Mo.ValueChanged
         Dim d As Date = GanttChart1.FromDate

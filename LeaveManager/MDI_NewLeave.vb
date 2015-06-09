@@ -97,14 +97,12 @@ Public Class MDI_NewLeave
 
 
 
-            upcmd.CommandText = "INSERT INTO [ListLeave] (userIndex,startDate,amstart,pmstart,toDate,amto,pmto,total,typeIndex,Comment" & IIf(path <> "", ",data", "") & ")" & _
+            upcmd.CommandText = "INSERT INTO [ListLeave] (userIndex,startDate,PM,toDate,AM,total,typeIndex,Comment" & IIf(path <> "", ",data", "") & ")" & _
                 "VALUES(" & indexUser & "," _
                 & " '" & DTP_from.Text & "'," _
-                & " " & CHK_AMfrom.Checked & "," _
                 & " " & CHK_PMfrom.Checked & "," _
                 & " '" & DTP_To.Text & "'," _
                 & " " & CHK_AMto.Checked & "," _
-                & " " & CHK_PMTo.Checked & "," _
                 & " " & TXT_Len.Text & "," _
                 & " " & indexLType & "," _
                 & " '" & TXT_Comment.Text & " '" _
@@ -132,11 +130,9 @@ Public Class MDI_NewLeave
             TXT_Comment.Text = ""
             TXT_Len.Text = ""
             DTP_from.Value = Date.Now
-            CHK_AMfrom.Checked = False
             CHK_PMfrom.Checked = False
             DTP_To.Value = Date.Now
             CHK_AMto.Checked = False
-            CHK_PMTo.Checked = False
             CBX_Nom.Text = ""
             CBX_Type.Text = ""
         Else

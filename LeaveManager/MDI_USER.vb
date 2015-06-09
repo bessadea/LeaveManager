@@ -113,6 +113,7 @@
             upcmd.CommandText = "UPDATE  Nom, Prenom, Mail, Tel, NombreCP, NombreRTT FROM [User] WHERE Nom = '" & CBX_Nom.Text & "'"
             upcmd.CommandText = "UPDATE [User]  SET "
 
+            upcmd.CommandText += "Prenom =  '" & CBX_Prenom.Text & "',"
             upcmd.CommandText += "Mail =  '" & TXT_Mail.Text & "',"
             upcmd.CommandText += "Tel =  '" & TXT_Tel.Text & "',"
             upcmd.CommandText += "NombreCP =  '" & TXT_CP.Text & "',"
@@ -132,6 +133,7 @@
 
     Private Sub DG_USER_MouseUp(sender As Object, e As MouseEventArgs) Handles DG_USER.MouseUp
         maj(DG_USER.SelectedCells.Item(0).Value())
+        'Name = DG_USER.Se DG_USER.SelectedCells.Item(0).RowIndex
     End Sub
     Public Sub maj(name As String)
         TXT_summury.Text = ""

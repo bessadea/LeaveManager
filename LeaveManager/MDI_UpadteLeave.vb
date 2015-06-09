@@ -11,26 +11,25 @@ Public Class MDI_UpdateLeave
         Dim typeIndex As Integer
         leaveID = id
         upcmd.Connection = connection
-        upcmd.CommandText = "SELECT userIndex,startDate,amstart,pmstart,toDate,amto,pmto,total,typeIndex,Comment,data FROM [ListLeave] where index =" & id
+        upcmd.CommandText = "SELECT userIndex,startDate,PM,toDate,AM,total,typeIndex,Comment,data FROM [ListLeave] where index =" & id
         ' upcmd.CommandText = "SELECT userIndex  FROM [ListLeave] WHERE index =" & id & " "
 
         Try
             dr = upcmd.ExecuteReader()
             dr.Read()
+            'userIndex,startDate,PM,toDate,AM,total,typeIndex,Comment,data
+            '0         1         2  3      4  5     6         7       8
             userIndex = dr.Item(0)
-            typeIndex = dr.Item(8)
             DTP_from.Value = dr.Item(1)
-            CHK_AMfrom.Checked = dr.Item(2)
-            CHK_PMfrom.Checked = dr.Item(3)
+            CHK_PMfrom.Checked = dr.Item(2)
+            DTP_To.Value = dr.Item(3)
+            CHK_AMto.Checked = dr.Item(4)
+            TXT_Len.Text = dr.Item(5)
+            typeIndex = dr.Item(6)
 
-            DTP_To.Value = dr.Item(4)
-            CHK_AMto.Checked = dr.Item(5)
-            CHK_PMTo.Checked = dr.Item(6)
+            TXT_Comment.Text = dr.Item(7)
 
-            TXT_Len.Text = dr.Item(7)
-            TXT_Comment.Text = dr.Item(9)
-
-            Dim b() As Byte = dr.Item(10)
+            Dim b() As Byte = dr.Item(8)
             Dim FileStreamObject As New System.IO.FileStream(Directory.GetCurrentDirectory + "\temp.pdf", IO.FileMode.Create, IO.FileAccess.Write)
             FileStreamObject.Write(b, 0, b.Length)
             FileStreamObject.Close()
@@ -154,11 +153,9 @@ Public Class MDI_UpdateLeave
 
             upcmd.CommandText = "UPDATE  [ListLeave]  SET " & _
                                 "startDate = '" & DTP_from.Text & "'" & _
-                                ",amstart = " & CHK_AMfrom.Checked & _
-                                ",pmstart = " & CHK_PMfrom.Checked & _
+                                ",PM     = " & CHK_PMfrom.Checked & _
                                 ",toDate = '" & DTP_To.Text & "'" & _
-                                ",amto = " & CHK_AMto.Checked & _
-                                ",pmto = " & CHK_PMTo.Checked & _
+                                ",AM = " & CHK_AMto.Checked & _
                                 ",total = '" & TXT_Len.Text & "'" & _
                                 ",typeIndex = " & indexLType & _
                                 ",Comment = '" & TXT_Comment.Text & "'" & _

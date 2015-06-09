@@ -27,7 +27,6 @@ Partial Class MDI_UpdateLeave
         Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel()
         Me.DTP_To = New System.Windows.Forms.DateTimePicker()
         Me.CHK_AMto = New System.Windows.Forms.CheckBox()
-        Me.CHK_PMTo = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.LBL_NOM = New System.Windows.Forms.Label()
@@ -40,7 +39,6 @@ Partial Class MDI_UpdateLeave
         Me.CBX_Type = New System.Windows.Forms.ComboBox()
         Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.DTP_from = New System.Windows.Forms.DateTimePicker()
-        Me.CHK_AMfrom = New System.Windows.Forms.CheckBox()
         Me.CHK_PMfrom = New System.Windows.Forms.CheckBox()
         Me.TXT_Nom = New System.Windows.Forms.TextBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
@@ -71,7 +69,7 @@ Partial Class MDI_UpdateLeave
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.65217!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.34783!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 28.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 29.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.FlowLayoutPanel2, 2, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.Label2, 1, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.TXT_Comment, 2, 6)
@@ -105,7 +103,6 @@ Partial Class MDI_UpdateLeave
         '
         Me.FlowLayoutPanel2.Controls.Add(Me.DTP_To)
         Me.FlowLayoutPanel2.Controls.Add(Me.CHK_AMto)
-        Me.FlowLayoutPanel2.Controls.Add(Me.CHK_PMTo)
         Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlowLayoutPanel2.Location = New System.Drawing.Point(103, 103)
         Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
@@ -130,16 +127,6 @@ Partial Class MDI_UpdateLeave
         Me.CHK_AMto.TabIndex = 4
         Me.CHK_AMto.Text = "AM"
         Me.CHK_AMto.UseVisualStyleBackColor = True
-        '
-        'CHK_PMTo
-        '
-        Me.CHK_PMTo.AutoSize = True
-        Me.CHK_PMTo.Location = New System.Drawing.Point(138, 3)
-        Me.CHK_PMTo.Name = "CHK_PMTo"
-        Me.CHK_PMTo.Size = New System.Drawing.Size(42, 17)
-        Me.CHK_PMTo.TabIndex = 5
-        Me.CHK_PMTo.Text = "PM"
-        Me.CHK_PMTo.UseVisualStyleBackColor = True
         '
         'Label2
         '
@@ -216,13 +203,13 @@ Partial Class MDI_UpdateLeave
         Me.WB_Data.MinimumSize = New System.Drawing.Size(20, 20)
         Me.WB_Data.Name = "WB_Data"
         Me.TableLayoutPanel1.SetRowSpan(Me.WB_Data, 5)
-        Me.WB_Data.Size = New System.Drawing.Size(420, 386)
+        Me.WB_Data.Size = New System.Drawing.Size(419, 386)
         Me.WB_Data.TabIndex = 17
         '
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(825, 34)
+        Me.Button1.Location = New System.Drawing.Point(824, 34)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 16
@@ -243,7 +230,6 @@ Partial Class MDI_UpdateLeave
         'FlowLayoutPanel1
         '
         Me.FlowLayoutPanel1.Controls.Add(Me.DTP_from)
-        Me.FlowLayoutPanel1.Controls.Add(Me.CHK_AMfrom)
         Me.FlowLayoutPanel1.Controls.Add(Me.CHK_PMfrom)
         Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(103, 63)
@@ -260,20 +246,10 @@ Partial Class MDI_UpdateLeave
         Me.DTP_from.Size = New System.Drawing.Size(81, 20)
         Me.DTP_from.TabIndex = 3
         '
-        'CHK_AMfrom
-        '
-        Me.CHK_AMfrom.AutoSize = True
-        Me.CHK_AMfrom.Location = New System.Drawing.Point(90, 3)
-        Me.CHK_AMfrom.Name = "CHK_AMfrom"
-        Me.CHK_AMfrom.Size = New System.Drawing.Size(42, 17)
-        Me.CHK_AMfrom.TabIndex = 4
-        Me.CHK_AMfrom.Text = "AM"
-        Me.CHK_AMfrom.UseVisualStyleBackColor = True
-        '
         'CHK_PMfrom
         '
         Me.CHK_PMfrom.AutoSize = True
-        Me.CHK_PMfrom.Location = New System.Drawing.Point(138, 3)
+        Me.CHK_PMfrom.Location = New System.Drawing.Point(90, 3)
         Me.CHK_PMfrom.Name = "CHK_PMfrom"
         Me.CHK_PMfrom.Size = New System.Drawing.Size(42, 17)
         Me.CHK_PMfrom.TabIndex = 5
@@ -361,10 +337,8 @@ Partial Class MDI_UpdateLeave
     Friend WithEvents FlowLayoutPanel2 As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents DTP_To As System.Windows.Forms.DateTimePicker
     Friend WithEvents CHK_AMto As System.Windows.Forms.CheckBox
-    Friend WithEvents CHK_PMTo As System.Windows.Forms.CheckBox
     Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents DTP_from As System.Windows.Forms.DateTimePicker
-    Friend WithEvents CHK_AMfrom As System.Windows.Forms.CheckBox
     Friend WithEvents CHK_PMfrom As System.Windows.Forms.CheckBox
     Friend WithEvents DELETEToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents TXT_Nom As System.Windows.Forms.TextBox
